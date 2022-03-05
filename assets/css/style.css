@@ -1,0 +1,15 @@
+.perm-marker{
+    font-family: 'Permanent Marker', cursive;
+}
+
+.playfair{
+    font-family: 'Playfair Display', serif;
+}
+
+.hotlink{
+    color:black !important;
+}
+
+.hotlink:hover{
+    color:brown !important;
+}
