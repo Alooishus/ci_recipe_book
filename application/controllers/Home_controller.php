@@ -7,11 +7,13 @@ class Home_controller extends CI_Controller {
     {
         parent::__construct();
     }
+    // Calls for views on homepage
     public function index()
     {
-        $data['title'] = "The Kolesar Group";
+        $data['title'] = "Recipe Book";
         $this->load->view('templates/header', $data);
         $this->load->view('templates/nav');
+        $this->load->view('templates/searchbar');
 		$this->load->view('home');
         $this->load->view('templates/footer');       
     }

@@ -12,19 +12,34 @@ class Login_controller extends CI_Controller {
         $this->load->library('form_validation');
     }
 
+    /**
+     * Load login page views
+     */
     public function index()
     {
-        $data['title'] = "Recipe Book";
+        $data['title'] = "Log In";
         $this->load->view('templates/header', $data);
         $this->load->view('templates/nav');
 		$this->load->view('auth/login', $data);
         $this->load->view('templates/footer');        
     }
 
+    /**
+     * Validate the login form inputs and set session on success
+     * 
+     * Success sets session vars:
+     * * authenticated = 1
+     * * auth_user = db->user_name
+     * * redirect to homepage
+     * 
+     * Fail sets session status['fail'] and status_message
+     * * redirect to login
+     */
     public function login()
     {
         $this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        // Send user back to index function if form validation fails
         if ($this->form_validation->run() == FALSE) 
         {
             $this->index();
@@ -32,11 +47,13 @@ class Login_controller extends CI_Controller {
         else
         {
             $this->load->model('users_model');
+            // Get values from HTML form post
             $data = array(
                 'email' => $this->input->post('email'),
                 'password' => $this->input->post('password')
             );
             $user = new Users_model;
+
             $result = $user->login_user($data);
             if ($result != FALSE)
             {

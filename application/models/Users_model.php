@@ -3,11 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         
 class Users_model extends CI_Model 
 {
+    /**
+     * Insert user details 
+     * @return bool
+     */
     public function register_user($data)
     {
         return $this->db->insert('users', $data);
     }
-    
+    /**
+     * Get user by email for password validation
+     * @return object
+     */
     public function login_user($data)
     {
         $this->db->select('*');

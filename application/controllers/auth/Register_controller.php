@@ -14,13 +14,18 @@ class Register_controller extends CI_Controller {
 
     public function index()
     {
-        $data['title'] = "Recipe Book";
+        $data['title'] = "Register";
         $this->load->view('templates/header', $data);
         $this->load->view('templates/nav');
 		$this->load->view('auth/register', $data);
         $this->load->view('templates/footer');     
     }
 
+    /**
+     * Validate user data and send to model for database insert
+     * 
+     * Set session status and status_message
+     */
     public function register()
     {
         $this->form_validation->set_rules('user_name', 'User Name', 'trim|required|alpha');

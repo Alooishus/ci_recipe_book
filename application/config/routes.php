@@ -58,6 +58,9 @@ $route['register']['GET'] = 'auth/Register_controller/index';
 $route['register']['POST'] = 'auth/Register_controller/register';
 $route['login']['GET'] = 'auth/Login_controller/index';
 $route['login']['POST'] = 'auth/Login_controller/login';
+$route['logout']['GET'] = 'auth/Logout_controller/index';
 
 // Page navigation
-$route['favorites']['GET'] = 'Page_controller/index';
+$route['favorites']['GET'] = 'pages/Favorites_controller/index';
+$route['add_recipe']['GET'] = 'pages/Insert_controller/index';
+$route['edit_recipe']['GET'] = 'pages/Edit_controller/index';

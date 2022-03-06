@@ -13,3 +13,13 @@
 .hotlink:hover{
     color:brown !important;
 }
+
+.boder-invis {
+    border-bottom: 2px solid transparent;
+}
+
+.active-link{
+    z-index: 0;
+    border-bottom: 2px solid grey;
+}
+
