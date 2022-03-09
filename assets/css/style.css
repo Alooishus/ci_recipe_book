@@ -10,16 +10,18 @@
     color:black !important;
 }
 
-.hotlink:hover{
-    color:brown !important;
-}
-
-.boder-invis {
+.border-invis {
     border-bottom: 2px solid transparent;
 }
 
+.hotlink:hover, .border-invis:hover{
+    color:brown !important;
+    border-color:brown;
+}
+
+
 .active-link{
     z-index: 0;
-    border-bottom: 2px solid grey;
+    border-color: grey !important;
 }
 

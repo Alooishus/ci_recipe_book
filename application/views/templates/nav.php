@@ -1,5 +1,5 @@
 <!-- Navbar View -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-5">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="pr-5 mr-5">
   <!-- Brand with svg logos links back to homepage -->
   <a class="navbar-brand perm-marker" href="<?= base_url() ?>">
@@ -20,16 +20,16 @@
   <!-- Main nav for favorites/insert/modify -->
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item <?php echo (uri_string() == 'favorites') ? 'active-link': '';?>">
+      <li class="nav-item border-invis <?php echo (uri_string() == 'favorites') ? 'active-link': '';?>">
         <a class="nav-link hotlink" href="<?= site_url('favorites') ?>">Favorites</a>
       </li>
       <!-- insert and modify are only visible to admin  -->
       <!-- TODO:: limit insert and modify for database is_admin -->
       <?php if($this->session->userdata('authenticated') == '1'): ?>
-      <li class="nav-item <?php echo (uri_string() == 'add_recipe') ? 'active-link': '';?>">
+      <li class="nav-item border-invis <?php echo (uri_string() == 'add_recipe') ? 'active-link': '';?>">
         <a class="nav-link hotlink" href="<?= site_url('add_recipe') ?>">Add Recipe</a>
       </li>
-      <li class="nav-item <?php echo (uri_string() == 'edit_recipe') ? 'active-link': '';?>">
+      <li class="nav-item border-invis <?php echo (uri_string() == 'edit_recipe') ? 'active-link': '';?>">
         <a class="nav-link hotlink" href="<?= site_url('edit_recipe') ?>">Edit Recipe</a>
       </li>
       <?php endif; ?>
@@ -41,7 +41,7 @@
     <!-- Show user name dropdown instead of login/register if user is logged in -->
     <?php if($this->session->userdata('authenticated') == '1'): ?>
     <ul class="navbar-nav pr-5">
-      <li class="nav-item dropdown px-2">
+      <li class="nav-item dropdown pr-5">
         <a class="nav-link dropdown-toggle" href="<?= site_url('login') ?>" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
           <?= $this->session->userdata['auth_user'] ?>
         </a>
