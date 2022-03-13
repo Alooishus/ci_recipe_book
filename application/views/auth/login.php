@@ -19,7 +19,7 @@
                     <article class="card-body">
                             <div class="form-group">
                                 <label>Email address</label>
-                                <input type="email" class="form-control" name="email" value="<?= set_value('email') ?>">
+                                <input type="email" class="form-control" name="email" value="<?= set_value('email') ?>" autofocus>
                                 <small class="text-danger font-italic"><?= form_error('email') ?></small>
                             </div>
                             <div class="form-group">

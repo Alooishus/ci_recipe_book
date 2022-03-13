@@ -25,3 +25,12 @@
     border-color: grey !important;
 }
 
+.delete-item{
+    cursor: pointer;
+    color:red;
+}
+
+.delete-item:hover{
+    color:purple;
+}
+

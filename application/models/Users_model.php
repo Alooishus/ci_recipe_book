@@ -27,7 +27,6 @@ class Users_model extends CI_Model
         if($query->num_rows() == 1)
         {
             $result = $query->row();
-            print_r($result);
             if(password_verify($data['password'], $result->password))
             {
                 return $result;

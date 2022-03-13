@@ -20,7 +20,7 @@
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label>Name </label>   
-                                    <input type="text" class="form-control" name="user_name" value="<?= set_value('user_name') ?>">
+                                    <input type="text" class="form-control" name="user_name" value="<?= set_value('user_name') ?>" autofocus>
                                     <small class="text-danger font-italic"><?= form_error('user_name') ?></small>
                                 </div>
                             </div>

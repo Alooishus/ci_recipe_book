@@ -11,7 +11,11 @@
 
 	<link rel="stylesheet" href="assets/css/bootstrap.css">
 	<link rel="stylesheet" href="assets/css/style.css">
+
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 	<script src="assets/js/jquery-3.6.0.js"></script>
 	<script src="assets/js/bootstrap.js"></script>
+	
 </head>
 <body class="playfair">
