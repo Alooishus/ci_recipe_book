@@ -11,6 +11,7 @@ class Users_model extends CI_Model
     {
         return $this->db->insert('users', $data);
     }
+    
     /**
      * Get user by email for password validation
      * @return object
@@ -20,7 +21,6 @@ class Users_model extends CI_Model
         $this->db->select('*');
         $this->db->from('users');
         $this->db->where('email',$data['email']);
-        //$this->db->where('password', $data['password']);
         $this->db->limit('1');
         $query = $this->db->get();
 

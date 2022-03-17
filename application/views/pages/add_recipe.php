@@ -128,6 +128,35 @@
                         </div>
     </form>            
 </div>
+
+<!-- Start Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="post" id="category_form">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="categoryModalLabel">Add Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="text-center d-none" id="categoryResultMsg">
+            <span><span>
+            <hr>
+        </div>
+        <input type="text" class="form-control" id="addCategoryName" name="addCategoryName" placeholder="Enter Category Name...">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" name="action" value="add" class="btn btn-primary">Submit</button>
+    </div>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- End Modal -->
+
 <!-- Include the Quill library -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
@@ -137,6 +166,7 @@
     theme: 'snow'
   });
 </script>
+
 <script>
     $(document).ready(function(){
         let cat_line = 1;
@@ -188,4 +218,20 @@
     function delete_image_line(id){
         $('#imageLine'+id).remove();
     }
+
+    $(document).on('submit', '#category_form', function(event){
+        event.preventDefault();
+        var category_name = $('#addCategoryName').val();
+        $.ajax({
+            url:"<?php echo base_url().'Category_controller/index' ?>",
+            method:'POST',
+            data: {category_name, category_name},
+            dataType: 'json',
+            success:function(data){
+                $('#categoryResultMsg').removeClass('d-none').addClass('d-block');
+                alert(data['msg']);
+            }
+        })
+    });
+    
 </script>
