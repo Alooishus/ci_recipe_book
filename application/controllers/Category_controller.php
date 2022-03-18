@@ -12,10 +12,13 @@ class Category_controller extends CI_Controller {
     {
         $data = $this->input->post(); 
         $check = $this->validate_category($data);
-        if($check['status'] == 'fail'){
+        if($check['status'] == 'fail')
+        {
             echo json_encode($check);
-        }else{
-            $this->add_category($data);
+        }
+        else
+        {
+            $check['insert_id'] = $this->add_category($data);
             echo json_encode($check);     
         }
     }
@@ -25,15 +28,20 @@ class Category_controller extends CI_Controller {
         $categories = new Categories_model;
         $result = $categories->get_all();
         $validation = [];
-        foreach($result as $r){
-            if(trim(strtolower($data['category_name'])) === strtolower($r['category_name'])){
+        foreach($result as $r)
+        {
+            if(trim(strtolower($data['category_name'])) === strtolower($r['category_name']))
+            {
                 $validation['status'] = 'fail';
-                $validation['msg'] = 'A category named: '. $data['category_name'] . ' already exists.';
+                $validation['msg'] = 'A category named '. $data['category_name'] . ' already exists.';
                 return $validation;
                 exit();
-            }else{
+            }
+            else
+            {
                 $validation['status'] = 'success';
                 $validation['msg'] = $data['category_name'] . ' added to the database!';
+                $validation['category_name'] = $data['category_name'];
             }
         }
         return $validation;

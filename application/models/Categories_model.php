@@ -5,7 +5,10 @@ class Categories_model extends CI_Model
 {
     public function category_insert($data)
     {
-        return $this->db->insert('categories', $data);
+        //return $this->db->insert('categories', $data);
+        $this->db->insert('categories', $data);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
     }
     
     public function get_all()

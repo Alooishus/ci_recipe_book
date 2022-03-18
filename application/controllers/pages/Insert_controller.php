@@ -7,10 +7,19 @@ class Insert_controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('auth_model');
+        $this->load->model('categories_model');
     }
     public function index()
     {
+        $categories = new Categories_model;
+        $result = $categories->get_all();
+
         $data['title'] = "Add Recipe";
+        $data = [
+            'title' => 'Add Recipe',
+            'categories' => $result
+        ];
+        
         $this->load->view('templates/header', $data);
         $this->load->view('templates/nav');
 		$this->load->view('pages/add_recipe', $data);

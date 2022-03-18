@@ -73,11 +73,11 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text">Category:</label>
                 </div>
-                <select class="custom-select" name="category[]">
+                <select class="custom-select" id="categorySelect" name="category[]">
                     <option selected disabled hidden></option>
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
+                    <?php foreach($categories as $category): ?>
+                        <option value="<?= $category['id'] ?>"><?= $category['category_name'] ?></option> 
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="col-1">
@@ -141,11 +141,11 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="text-center d-none" id="categoryResultMsg">
-            <span><span>
+        <div class="text-center" id="categoryResultMsg">
+            <span>Enter categories one at a time.</span>
             <hr>
         </div>
-        <input type="text" class="form-control" id="addCategoryName" name="addCategoryName" placeholder="Enter Category Name...">
+        <input type="text" class="form-control" id="addCategoryName" name="addCategoryName" placeholder="Enter Category Name..." autofocus>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -219,6 +219,10 @@
         $('#imageLine'+id).remove();
     }
 
+    $('#categoryModal').on('shown.bs.modal', function () {
+        $('#addCategoryName').focus();
+    }) 
+
     $(document).on('submit', '#category_form', function(event){
         event.preventDefault();
         var category_name = $('#addCategoryName').val();
@@ -226,11 +230,16 @@
             url:"<?php echo base_url().'Category_controller/index' ?>",
             method:'POST',
             data: {category_name, category_name},
-            dataType: 'json',
-            success:function(data){
-                $('#categoryResultMsg').removeClass('d-none').addClass('d-block');
-                alert(data['msg']);
+            dataType: 'json'
+        }).done(function( data ) {
+            $('#categoryResultMsg').removeClass('d-none').addClass('d-block');
+            if(data['status'] === 'success'){
+                $('#categoryResultMsg').find('span').removeClass('text-danger').addClass('text-success').text(data['msg']);
+                $('#categorySelect').append(`<option value="${data['insert_id']}">${data['category_name']}</option>`)
+            }else{
+                $('#categoryResultMsg').find('span').removeClass('text-success').addClass('text-danger').text(data['msg']);
             }
+            $('#addCategoryName').val('');
         })
     });
     

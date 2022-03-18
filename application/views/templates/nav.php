@@ -32,9 +32,11 @@
       <li class="nav-item border-invis <?php echo (uri_string() == 'edit_recipe') ? 'active-link': '';?>">
         <a class="nav-link hotlink" href="<?= site_url('edit_recipe') ?>">Edit Recipe</a>
       </li>
+      <?php if(uri_string() == 'add_recipe'): ?>
       <li class="nav-item border-invis"> <!-- Modal link -->
         <a href="" class="nav-link hotlink" data-toggle="modal" data-target="#categoryModal">Add Category</a>
       </li>
+      <?php endif; ?>
       <?php endif; ?>
     </ul>
     <!-- Display session status message for successful log out -->

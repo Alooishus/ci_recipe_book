@@ -27,10 +27,9 @@ class Migration_Users extends CI_Migration
                 'constraint'        => '191'
             ],
             'is_admin' => [
-                'type'              => 'TINYINT',
-                'constraint'        => '1',
-                'default'           => '0',
-                'NULL'              => TRUE
+                'type'              => 'ENUM',
+                'constraint'        => ['normal', 'admin', 'super'],
+                'default'           => 'normal'
             ],
             'remember_token' => [
                 'type'              => 'VARCHAR',
