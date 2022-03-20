@@ -1,5 +1,5 @@
 <div class="container">
-    <!-- Divider -->
+    <!-- Thumbnail Divider -->
     <div class="position-relative d-flex align-items-center py-3">
         <div class="flex-grow-1 border-top"></div>
         <span class="flex-shrink-1 mx-4 text-muted perm-marker">Thumbnail Details</span>
@@ -7,18 +7,23 @@
     </div>
     <!-- End Divider -->
     <form action="">
-    <div class="row">
-        <div class="col-sm-12 offset-lg-3 col-lg-6">
+    <div class="row align-items-center">
+        <div class="col-sm-8 offset-lg-3 col-lg-6">
             <div class="input-group py-2">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupFileAddon01">Picture</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="thumbnail" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    <input type="file" class="custom-file-input" name="photo" onchange="previewFile(this.id);" id="image0" aria-describedby="inputGroupFileAddon01" capture="environment">
+                    <label class="custom-file-label" for="thumbnail" id="thumbnailText" >Choose file</label>
                 </div>
             </div>
         </div>
+            <div class="col-lg-2 d-none d-lg-block">
+                <div>
+                    <img class="rounded" id="previewImage0" style="width:auto; max-height:100px;" src="<?= base_url() ?>/assets/icons/placeholder.jpg"alt="Placeholder">
+                </div>
+            </div>
     </div>
     <div class="row">
         <div class="col-12">
@@ -90,7 +95,7 @@
             <button type="button" class="btn btn-primary btn-sm" id="addCategory">Additional Category</button>
         </div>
     </div>
-    <!-- Divider -->
+    <!-- Recipe Card Divider -->
     <div class="position-relative d-flex align-items-center pt-4 pb-3">
         <div class="flex-grow-1 border-top"></div>
         <span class="flex-shrink-1 mx-4 text-muted perm-marker">Recipe Card Details</span>
@@ -98,17 +103,19 @@
     </div>
     <!-- End Divider -->
      <div class="row pb-5 mb-5">
-         <div class="col">
-             <div id="editor"></div>
-         </div>
+        <div class="col">
+            <div id="editor"></div>
+        <div>
      </div>  
-     <!-- Divider -->
+     <!-- Card Images Divider -->
     <div class="position-relative d-flex align-items-center pt-2 pb-3">
         <div class="flex-grow-1 border-top"></div>
         <span class="flex-shrink-1 mx-4 text-muted perm-marker">Recipe Page Images</span>
         <div class="flex-grow-1 border-top"></div>
     </div>
     <!-- End Divider -->
+    
+    <div class="row justify-content-center" id="previewContainer"></div>
     <div id="imageLine"></div>
     
     <div class="row justify-content-center py-2">
@@ -116,7 +123,7 @@
             <button type="button" class="btn btn-primary btn-sm" id="addImage">Additional Images</button>
         </div>
     </div>
-    <!-- Divider -->
+    <!-- Submit Button Divider -->
     <div class="position-relative d-flex align-items-center pt-2 pb-3">
         <div class="flex-grow-1 border-top"></div>
         <span class="flex-shrink-1 mx-4 text-muted perm-marker">Enter Recipe</span>
@@ -124,7 +131,7 @@
     </div>
     <!-- End Divider -->
     <div class="row justify-content-center py-2">
-    <button class="btn btn-success">Submit</button>
+    <button class="btn btn-success" id="finalize">Finalize</button>
                         </div>
     </form>            
 </div>
@@ -163,14 +170,32 @@
 <!-- Initialize Quill editor -->
 <script>
   var quill = new Quill('#editor', {
-    theme: 'snow'
+    theme: 'snow',
+    modules: {
+        'toolbar': [
+          [{ 'font': [] }, { 'size': [] }],
+          [ 'bold', 'italic', 'underline', 'strike' ],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'script': 'super' }, { 'script': 'sub' }],
+          [{ 'header': '1' }, { 'header': '2' }],
+          [{ 'list': 'ordered' }, { 'list': 'bullet'}, { 'indent': '-1' }, { 'indent': '+1' }],
+          [ 'link'],
+          [ 'clean' ]
+        ]
+    }
   });
 </script>
 
 <script>
     $(document).ready(function(){
+        $('#finalize').on('click', function(event){
+            event.preventDefault();
+            let html = $('#editor').children().html();
+
+            console.log(html);
+        })
         let cat_line = 1;
-        let image_line = 0;
+        let image_line = 1;
         $('#addCategory').click(function(){
             $('#categoryLine').append(`<div class="row justify-content-center" id="categoryLine${cat_line}">
             <div class="col-10 col-lg-4 input-group py-2">
@@ -198,8 +223,8 @@
                         <span class="input-group-text" id="inputGroupFileAddon${image_line}" name="additional_images[]">Picture</span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="image${image_line}" id="inputGroupFile${image_line}" aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" for="inputGroupFile${image_line}">Choose file</label>
+                        <input type="file" class="custom-file-input" name="image${image_line}" onchange="previewFile(this.id);" id="image${image_line}" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="image${image_line}">Choose file</label>
                     </div>
                 </div>
             </div>
@@ -210,14 +235,6 @@
         image_line++;
         });
     });
-
-    function delete_cat_line(id){
-        $('#categoryLine'+id).remove();
-    }
-
-    function delete_image_line(id){
-        $('#imageLine'+id).remove();
-    }
 
     $('#categoryModal').on('shown.bs.modal', function () {
         $('#addCategoryName').focus();
