@@ -14,12 +14,12 @@
                     <span class="input-group-text" id="inputGroupFileAddon01">Picture</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="photo" onchange="previewFile(this.id);" id="image0" aria-describedby="inputGroupFileAddon01" capture="environment">
+                    <input type="file" class="custom-file-input" name="photo" onchange="previewFile(this.id);" id="image0" aria-describedby="inputGroupFileAddon01">
                     <label class="custom-file-label" for="thumbnail" id="thumbnailText" >Choose file</label>
                 </div>
             </div>
         </div>
-            <div class="col-lg-2 d-none d-lg-block">
+            <div class="col-lg-2">
                 <div>
                     <img class="rounded" id="previewImage0" style="width:auto; max-height:100px;" src="<?= base_url() ?>/assets/icons/placeholder.jpg"alt="Placeholder">
                 </div>
