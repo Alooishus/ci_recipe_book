@@ -10,31 +10,38 @@ class Upload_controller extends CI_Controller {
     }
     public function index()
     {
-            $this->load->view('upload_form', array('error' => ' ' ));
+        $this->load->view('upload_form', array('error' => ' ' ));
     }
 
-    public function do_upload()
+    public function ajax_upload()
     {
-            $config['upload_path']          = './uploads/';
-            $config['allowed_types']        = 'gif|jpg|png';
-            /* $config['max_size']             = 10000;
-            $config['max_width']            = 1024;
-            $config['max_height']           = 768; */
-
+        sleep(3);
+        if($_FILES["files"]["name"] != '')
+        {
+            $output = '';
+            $config["upload_path"] = './uploads/';
+            $config["allowed_types"] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
-
-            if ( ! $this->upload->do_upload('userfile'))
+            $this->upload->initialize($config);
+            for($count = 0; $count<count($_FILES["files"]["name"]); $count++)
             {
-                    $error = array('error' => $this->upload->display_errors());
-
-                    $this->load->view('upload_form', $error);
+                $_FILES["file"]["name"] = $_FILES["files"]["name"][$count];
+                $_FILES["file"]["type"] = $_FILES["files"]["type"][$count];
+                $_FILES["file"]["tmp_name"] = $_FILES["files"]["tmp_name"][$count];
+                $_FILES["file"]["error"] = $_FILES["files"]["error"][$count];
+                $_FILES["file"]["size"] = $_FILES["files"]["size"][$count];
+                if($this->upload->do_upload('file'))
+                {
+                    $data = $this->upload->data();
+                    $output .= '
+                    <div class="col-lg-2">
+                    <img src="'.base_url().'uploads/'.$data["file_name"].'" class="img-responsive img-thumbnail" />
+                    </div>
+                    ';  
+                }
             }
-            else
-            {
-                    $data = array('upload_data' => $this->upload->data());
-
-                    $this->load->view('upload_success', $data);
-            }
+            echo $output;   
+        }
     }
 }
 

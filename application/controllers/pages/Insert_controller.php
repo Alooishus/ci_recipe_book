@@ -22,6 +22,7 @@ class Insert_controller extends CI_Controller {
         
         $this->load->view('templates/header', $data);
         $this->load->view('templates/nav');
+        $this->load->view('templates/category_modal');
 		$this->load->view('pages/add_recipe', $data);
         $this->load->view('templates/footer');     
     }
