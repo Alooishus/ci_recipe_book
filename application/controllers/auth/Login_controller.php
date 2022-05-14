@@ -59,6 +59,7 @@ class Login_controller extends CI_Controller {
             {
                 $this->session->set_userdata('authenticated', '1');
                 $this->session->set_userdata('auth_user', $result->user_name);
+                $this->session->set_userdata('user_id', $result->id);
                 redirect(base_url());
             } 
             else 

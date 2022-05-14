@@ -6,15 +6,22 @@ class Home_controller extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('recipes_model');
     }
     // Calls for views on homepage
     public function index()
     {
-        $data['title'] = "Recipe Book";
+        $recipe = new Recipes_model;
+        $result = $recipe->get_all();
+
+        $data = [
+            'title' => 'Recipe Book',
+            'recipes' => $result
+        ];
         $this->load->view('templates/header', $data);
         $this->load->view('templates/nav');
-        $this->load->view('templates/searchbar');
-		$this->load->view('home');
+        //$this->load->view('templates/searchbar');
+		$this->load->view('home', $data);
         $this->load->view('templates/footer');       
     }
 }

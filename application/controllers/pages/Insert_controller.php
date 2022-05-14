@@ -14,7 +14,6 @@ class Insert_controller extends CI_Controller {
         $categories = new Categories_model;
         $result = $categories->get_all();
 
-        $data['title'] = "Add Recipe";
         $data = [
             'title' => 'Add Recipe',
             'categories' => $result

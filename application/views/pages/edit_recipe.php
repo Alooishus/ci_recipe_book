@@ -1,0 +1,1 @@
+remove this page and make it a link from each recipe

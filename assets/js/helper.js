@@ -1,5 +1,5 @@
 // Potential for removal if not using.
-function previewFile(input){
+/* function previewFile(input){
     var file = $('#'+input).get(0).files[0];
     var count = input.match(/\d+/);
     $('#'+input).next('.custom-file-label').html(file.name);
@@ -18,7 +18,7 @@ function previewFile(input){
         }
         reader.readAsDataURL(file);
     }
-}
+} */
 
 function delete_cat_line(id){
     $('#categoryLine'+id).remove();

@@ -6,7 +6,21 @@
         <div class="flex-grow-1 border-top"></div>
     </div>
     <!-- End Divider -->
+    <?php //print_arr($this->session); ?>
     <form method="post" id="uploadForm" enctype="multipart/form-data">
+        <div class="row justify-content-center">
+            <div class="col-6">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" name="thumbnail-image" id="thumbnail-image" aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="row">
@@ -14,14 +28,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text input-group-text-sm" id="inputGroup-sizing">Title:</span>
                         </div>
-                        <input type="text" class="form-control" name="recipe_name" aria-label="Sizing example input" aria-describedby="inputGroup-sizing">
+                        <input type="text" class="form-control" name="recipe_name" id="recipe_name" aria-label="Sizing example input" aria-describedby="inputGroup-sizing">
                     </div>
 
                     <div class="col-sm-12 col-lg-6 input-group py-2">
                         <div class="input-group-prepend">
                             <label class="input-group-text">Difficulty:</label>
                         </div>
-                        <select class="custom-select" name="difficulty">
+                        <select class="custom-select" name="difficulty" id="difficulty">
                             <option selected disabled hidden></option>
                             <option value="Easy">Easy</option>
                             <option value="Medium">Medium</option>
@@ -34,7 +48,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text">Hours:</label>
                         </div>
-                        <select class="custom-select" name="hours">
+                        <select class="custom-select" name="hours" id="hours">
                         <?php  for ($i = 0; $i < 49; $i++): ?>
                                 <option value="<?= sprintf("%02d", $i) ?>"><?= sprintf("%02d", $i) ?></option>
                             <?php endfor ?>
@@ -45,7 +59,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text">Minutes:</label>
                         </div>
-                        <select class="custom-select" name="minutes">
+                        <select class="custom-select" name="minutes" id="minutes">
                             <?php  for ($i = 0; $i < 60; $i=$i+5): ?>
                                 <option value="<?= sprintf("%02d", $i) ?>" <?= $i==30 ? 'selected' : '' ?>><?= sprintf("%02d", $i) ?></option>
                             <?php endfor ?>
@@ -86,18 +100,18 @@
         <!-- End Divider -->
         <div class="row pb-5 mb-5">
             <div class="col">
-                <div id="editor"></div>
+                <div id="editor" name="editor"></div>
             <div>
         </div>  
         <!-- Recipe Page Images Divider -->
-        <div class="position-relative d-flex align-items-center pt-2 pb-3">
+        <!-- <div class="position-relative d-flex align-items-center pt-2 pb-3">
             <div class="flex-grow-1 border-top"></div>
             <span class="flex-shrink-1 mx-4 text-muted perm-marker">Recipe Page Images</span>
             <div class="flex-grow-1 border-top"></div>
-        </div>
+        </div> -->
         <!-- End Divider -->
         
-        <div class="row justify-content-center" id="uploaded_images">
+       <!--  <div class="row justify-content-center" id="uploaded_images">
             <div class="col-lg-2">
                 <div>
                     <img class="rounded" id="previewImage0" style="width:auto; max-height:100px;" src="<?= base_url() ?>/assets/icons/placeholder.jpg"alt="Placeholder">
@@ -119,7 +133,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Submit Button Divider -->
         <div class="position-relative d-flex align-items-center pt-2 pb-3">
             <div class="flex-grow-1 border-top"></div>
@@ -157,70 +171,62 @@
 
 <script>
     $(document).ready(function(){
-        $('#files').on('change',function(){
-            var fileName = $(this).val();
-            $(this).next('.custom-file-label').html(fileName);
-        })
+        // show file name in custom file input
+        $('#thumbnail-image').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+        // Insert recipe
+        $("#theform").on("submit", function () {
+                var hvalue = $('.ql-editor').html();
+                $(this).append("<textarea name='content' style='display:none'>"+hvalue+"</textarea>");
+            });
+        $('#uploadForm').on('submit',function(e){
+            e.preventDefault();
+            /* let thumbnail = $("#thumbnail-image").val();
+            let name = $("#recipe_name").val();
+            let difficulty = $("#difficulty").val();
+            let total_time = $("#hours").val() + $("#minutes").val();
+            let category = $("select[name='category[]']").map(function(){
+                return $(this).val();
+            }).get(); */
+            let details = quill.root.innerHTML;
+            $(this).append("<textarea name='description' style='display:none'>"+details+"</textarea>");
 
-        $('#uploadImages').on('click', function(event){
-            event.preventDefault();
-            var files = $('#files')[0].files;
-            var error = '';
-            var form_data = new FormData();
-            for(var count = 0; count<files.length; count++)
-            {
-            var name = files[count].name;
-            var extension = name.split('.').pop().toLowerCase();
-            if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1)
-            {
-                error += "Invalid " + count + " Image File"
-            }
-            else
-            {
-                form_data.append("files[]", files[count]);
-            }
-            }
-            if(error == '')
-            {
-            $.ajax({
-                url:"<?php echo base_url(); ?>upload_controller/ajax_upload",
-                method:"POST",
-                data:form_data,
+           // console.log(name+difficulty+total_time+category+details+thumbnail);
+           $.ajax({
+                url:"<?php echo base_url().'api/Insert_api/create' ?>",
+                method:'POST',
+                data:new FormData(this),
                 contentType:false,
                 cache:false,
                 processData:false,
-                beforeSend:function()
-                {
-                $('#uploaded_images').html("<label class='text-success'>Uploading...</label>");
-                },
-                success:function(data)
-                {
-                $('#uploaded_images').html(data);
-                $('#files').val('');
+                success:function(data){
+                    alert(data);
                 }
-            })
-            }
-            else
-            {
-            alert(error);
-            }
+            });
+           
+
         });
 
+        
+
         let cat_line = 1;
-        let image_line = 1;
         $('#addCategory').click(function(){
             $('#categoryLine').append(`<div class="row justify-content-center" id="categoryLine${cat_line}">
             <div class="col-10 col-lg-4 input-group py-2">
-                <div class="input-group-prepend">
-                    <label class="input-group-text">Category:</label>
+                    <div class="input-group-prepend">
+                        <label class="input-group-text">Category:</label>
+                    </div>
+                    <select class="custom-select" id="categorySelect" name="category[]">
+                        <option selected disabled hidden></option>
+                        <?php foreach($categories as $category): ?>
+                            <option value="<?= $category['id'] ?>"><?= $category['category_name'] ?></option> 
+                        <?php endforeach; ?>
+                    </select>
                 </div>
-                <select class="custom-select" name="category[]">
-                    <option selected disabled hidden></option>
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
-                </select>
-            </div>
             <div class="col-1">
                 <span class="h1 delete-item" onclick="delete_cat_line(${cat_line})" aria-hidden="true">&times;</span>
             </div>
