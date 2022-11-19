@@ -2,13 +2,13 @@
     <!-- Thumbnail Divider -->
     <div class="position-relative d-flex align-items-center py-3">
         <div class="flex-grow-1 border-top"></div>
-        <span class="flex-shrink-1 mx-4 text-muted perm-marker">Thumbnail Details</span>
+        <span class="flex-shrink-1 mx-4 text-muted perm-marker">Recipe Details</span>
         <div class="flex-grow-1 border-top"></div>
     </div>
     <!-- End Divider -->
     <?php //print_arr($this->session); ?>
     <form method="post" id="uploadForm" enctype="multipart/form-data">
-        <div class="row justify-content-center">
+        <!-- <div class="row justify-content-center">
             <div class="col-6">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -20,7 +20,7 @@
                 </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="row">
             <div class="col-12">
                 <div class="row">
@@ -94,7 +94,7 @@
         <!-- Recipe Card Divider -->
         <div class="position-relative d-flex align-items-center pt-4 pb-3">
             <div class="flex-grow-1 border-top"></div>
-            <span class="flex-shrink-1 mx-4 text-muted perm-marker">Recipe Card Details</span>
+            <span class="flex-shrink-1 mx-4 text-muted perm-marker">Recipe Description/Method</span>
             <div class="flex-grow-1 border-top"></div>
         </div>
         <!-- End Divider -->
@@ -185,17 +185,8 @@
             });
         $('#uploadForm').on('submit',function(e){
             e.preventDefault();
-            /* let thumbnail = $("#thumbnail-image").val();
-            let name = $("#recipe_name").val();
-            let difficulty = $("#difficulty").val();
-            let total_time = $("#hours").val() + $("#minutes").val();
-            let category = $("select[name='category[]']").map(function(){
-                return $(this).val();
-            }).get(); */
             let details = quill.root.innerHTML;
             $(this).append("<textarea name='description' style='display:none'>"+details+"</textarea>");
-
-           // console.log(name+difficulty+total_time+category+details+thumbnail);
            $.ajax({
                 url:"<?php echo base_url().'api/Insert_api/create' ?>",
                 method:'POST',

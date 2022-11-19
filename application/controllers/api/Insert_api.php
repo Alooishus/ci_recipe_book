@@ -25,10 +25,17 @@ class Insert_api extends CI_Controller {
             'description' => $this->input->post('description'),
             'user_id' => $this->session->user_id
         ];
-
         $recipe_id = $recipe->insert_recipe($recipe_data);
+        $categories = $this->input->post('category');
+        foreach($categories as $category){
+            $category_data = [
+                'recipe_id' => $recipe_id,
+                'category_id' => $category
+            ];
+            $recipe->insert_category($category_data);
+        }
 
-        $result = 'fail';
+        /* $result = 'fail';
         if(isset($_FILES['thumbnail-image']['name']))
         {
             //$config['file_name']            = $_FILES['thumbnail-image']['name'];
@@ -64,7 +71,7 @@ class Insert_api extends CI_Controller {
                 // $result = 'success';
                 // $this->load->view('upload_success', $data);
             }
-        }
+        } */
         
         
 

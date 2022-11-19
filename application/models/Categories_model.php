@@ -18,6 +18,25 @@ class Categories_model extends CI_Model
         $records = $this->db->get();
         return $records->result_array();
     }
+
+    public function get($id)
+    {
+        $this->db->select('*');
+        $this->db->from('categories');
+        $this->db->where('id', $id);
+        return $this->db->get();
+        
+    }
+
+    public function get_category_recipe($id)
+    {
+        $this->db->select('*');
+        $this->db->from('categories_line');
+        $this->db->join('categories', 'categories.id = categories_line.category_id');
+        $this->db->where('recipe_id', $id);
+        $records = $this->db->get();
+        return $records->result_array();
+    }
                         
 }
 

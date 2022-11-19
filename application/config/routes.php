@@ -64,3 +64,4 @@ $route['logout']['GET'] = 'auth/Logout_controller/index';
 $route['favorites']['GET'] = 'pages/Favorites_controller/index';
 $route['add_recipe']['GET'] = 'pages/Insert_controller/index';
 $route['edit_recipe']['GET'] = 'pages/Edit_controller/index';
+$route['view_recipe']['GET'] = 'pages/View_controller/index';
